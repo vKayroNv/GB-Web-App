@@ -34,7 +34,7 @@ namespace Lesson_1
 
             Task.WaitAll(_posts);
 
-            using (StreamWriter sw = new StreamWriter("result.txt"))
+            using (StreamWriter sw = new StreamWriter(fileName))
             {
                 foreach(Task<Post> post in _posts)
                 {
