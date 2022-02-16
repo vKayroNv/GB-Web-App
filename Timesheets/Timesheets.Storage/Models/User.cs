@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Timesheets.Storage.Models
 {
-    [Table("User", Schema = "Test")]
+    [Table("users")]
     public class User : Entity
     {
         public string FirstName { get; set; }
