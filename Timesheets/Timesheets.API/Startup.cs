@@ -14,6 +14,7 @@ using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Timesheets.Core.Repositories;
+using Timesheets.Storage.EF;
 
 namespace Timesheets.API
 {
@@ -28,6 +29,10 @@ namespace Timesheets.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<DatabaseContext>();
+
+
+
             services.AddSingleton<PersonRepository>();
 
             services.AddControllers();
