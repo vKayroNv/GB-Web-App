@@ -13,28 +13,37 @@ namespace Timesheets.Storage.EF
 {
     public class DatabaseContext : DbContext
     {
-        //dotnet ef migrations add InitialCreate
+        //dotnet ef migrations add InitialCreate --configuration MIGRATE
         //dotnet ef database update
 
         public DbSet<User> Users { get; set; }
         public DbSet<Employee> Employees { get; set; }
 
+        private IConfiguration _configuration;
+
+#if DEBUG || RELEASE
+        public DatabaseContext(IConfiguration configuration)
+        {
+            _configuration = configuration;
+        }
+#endif
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) // ???
         {
+#if MIGRATE
             if (optionsBuilder.IsConfigured)
             {
                 base.OnConfiguring(optionsBuilder);
                 return;
             }
 
-            IConfigurationBuilder configurationBuilder = new ConfigurationBuilder()
+            var configurationBuilder = new ConfigurationBuilder()
                 .SetBasePath(@"D:\randomthings\C#\GB-Web-App\Timesheets\Timesheets.API")
                 .AddJsonFile("appsettings.json");
 
-            IConfiguration configuration = configurationBuilder.Build();
-
-            optionsBuilder.UseSqlite(configuration.GetConnectionString("database"));
-
+            _configuration = configurationBuilder.Build();
+#endif
+            optionsBuilder.UseSqlite(_configuration.GetConnectionString("database"));
             base.OnConfiguring(optionsBuilder);
         }
 
