@@ -1,7 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Timesheets.Storage.EF;
 using Timesheets.Storage.Interfaces;
-using Timesheets.Storage.Models;
 using Timesheets.Storage.Repositories;
 
 namespace Timesheets.API
@@ -14,6 +13,8 @@ namespace Timesheets.API
 
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
+            services.AddSingleton<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddSingleton<ILoginRepository, LoginRepository>();
         }
     }
 }

@@ -6,8 +6,9 @@ namespace Timesheets.Core.Interfaces
 {
     public interface IUserService
     {
-        public TokenResponse Authenticate(string user, string password);
-
-        public string RefreshToken(string token);
+        public Task<bool> CreateProfile(string username, string password, CancellationToken cts);
+        public Task<bool> DeleteProfile(string username, string password, CancellationToken cts);
+        public Task<TokenResponse> Authenticate(string username, string password, CancellationToken cts);
+        public Task<string> RefreshToken(string token, CancellationToken cts);
     }
 }
