@@ -9,9 +9,9 @@ using Timesheets.Storage.Models;
 
 namespace Timesheets.Storage.Repositories
 {
-    public class UserRepository : IUserRepository
+    public sealed class UserRepository : IUserRepository
     {
-        private DatabaseContext _context;
+        private readonly DatabaseContext _context;
 
         public UserRepository(DatabaseContext context)
         {
@@ -52,7 +52,9 @@ namespace Timesheets.Storage.Repositories
             var result = await _context.Users.FirstOrDefaultAsync(s => s.Id == entity.Id, cts);
 
             if (result == null)
+            {
                 return false;
+            }
 
             result.FirstName = entity.FirstName;
             result.LastName = entity.LastName;

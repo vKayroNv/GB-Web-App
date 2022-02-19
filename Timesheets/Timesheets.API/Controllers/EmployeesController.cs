@@ -33,9 +33,13 @@ namespace Timesheets.API.Controllers
             var result = await _repository.Create(entity, cts);
 
             if (result)
+            {
                 return Ok(entity);
+            }
             else
+            {
                 return BadRequest(entity);
+            }
         }
 
         /// <summary>
@@ -50,9 +54,13 @@ namespace Timesheets.API.Controllers
             var result = await _repository.Read(cts);
 
             if (result != null)
+            {
                 return Ok(result);
+            }
             else
+            {
                 return BadRequest();
+            }
         }
 
         /// <summary>
@@ -67,10 +75,14 @@ namespace Timesheets.API.Controllers
         {
             var result = await _repository.Read(id, cts);
 
-            if (result != null) 
+            if (result != null)
+            {
                 return Ok(result);
+            }
             else
+            {
                 return BadRequest(id);
+            }
         }
 
         /// <summary>
@@ -86,9 +98,13 @@ namespace Timesheets.API.Controllers
             var result = await _repository.Update(entity, cts);
 
             if (result)
+            {
                 return Ok(entity);
+            }
             else
+            {
                 return BadRequest(entity.Id);
+            }
         }
 
         /// <summary>
@@ -104,9 +120,13 @@ namespace Timesheets.API.Controllers
             var result = await _repository.Delete(id, cts);
 
             if (result)
+            {
                 return Ok(id);
+            }
             else
+            {
                 return BadRequest(id);
+            }
         }
     }
 }

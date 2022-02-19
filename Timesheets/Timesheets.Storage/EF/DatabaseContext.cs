@@ -1,17 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-using System.Text;
 using Timesheets.Storage.EF.Configuration;
 using Timesheets.Storage.Models;
 
 namespace Timesheets.Storage.EF
 {
-    public class DatabaseContext : DbContext
+    public sealed class DatabaseContext : DbContext
     {
         //dotnet ef migrations add InitialCreate --configuration MIGRATE
         //dotnet ef database update --configuration MIGRATE
@@ -21,18 +15,18 @@ namespace Timesheets.Storage.EF
         public DbSet<Login> Logins { get; set; }
         public DbSet<RefreshToken> Tokens { get; set; }
 
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
-        #if DEBUG || RELEASE
+#if DEBUG || RELEASE
         public DatabaseContext(IConfiguration configuration)
         {
             _configuration = configuration;
         }
-        #endif
+#endif
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) // ???
         {
-            #if MIGRATE
+#if MIGRATE
             if (optionsBuilder.IsConfigured)
             {
                 base.OnConfiguring(optionsBuilder);
@@ -44,7 +38,7 @@ namespace Timesheets.Storage.EF
                 .AddJsonFile("appsettings.json");
 
             _configuration = configurationBuilder.Build();
-            #endif
+#endif
 
             optionsBuilder.UseSqlite(_configuration.GetConnectionString("database"));
             base.OnConfiguring(optionsBuilder);

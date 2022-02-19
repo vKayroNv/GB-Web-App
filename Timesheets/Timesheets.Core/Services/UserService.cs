@@ -1,6 +1,5 @@
 ﻿using Microsoft.IdentityModel.Tokens;
 using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -13,7 +12,7 @@ using Timesheets.Storage.Models;
 
 namespace Timesheets.Core.Services
 {
-    public class UserService : IUserService
+    public sealed class UserService : IUserService
     {
         public const string SecretCode = "THIS IS SOME VERY SECRET STRING!!! Im blue da ba dee da ba di da ba dee da ba di da d ba dee da ba di da ba dee";
 
@@ -42,12 +41,16 @@ namespace Timesheets.Core.Services
         {
             var profile = await _loginRepository.Read(username, cts);
             if (profile == null || profile.Password != password)
+            {
                 return false;
+            }
 
             var token = await _refreshTokenRepository.Get(profile.RefreshTokenId, cts);
 
             if (token != null)
+            {
                 await _refreshTokenRepository.Remove(token.Id, cts);
+            }
 
             return await _loginRepository.Delete(profile.Id, cts);
         }
@@ -56,7 +59,9 @@ namespace Timesheets.Core.Services
         {
             var profile = await _loginRepository.Read(username, cts);
             if (profile == null || profile.Password != password)
+            {
                 return null;
+            }
 
             RefreshToken refreshToken;
 

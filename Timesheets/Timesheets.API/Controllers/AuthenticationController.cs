@@ -5,7 +5,6 @@ using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Timesheets.Core.Interfaces;
-using Timesheets.Core.Responses;
 
 namespace Timesheets.API.Controllers
 {
@@ -25,9 +24,13 @@ namespace Timesheets.API.Controllers
             var result = await _userService.CreateProfile(username, password, cts);
 
             if (result)
+            {
                 return Ok(new { message = $"Profile \"{username}\" has been created" });
+            }
             else
+            {
                 return BadRequest(new { message = $"Profile \"{username}\" already exists" });
+            }
         }
 
         [HttpPost("delete-profile")]
@@ -36,9 +39,13 @@ namespace Timesheets.API.Controllers
             var result = await _userService.DeleteProfile(username, password, cts);
 
             if (result)
+            {
                 return Ok(new { message = $"Profile \"{username}\" has been deleted" });
+            }
             else
+            {
                 return BadRequest(new { message = $"Username or password is incorrect" });
+            }
         }
 
         [HttpPost("authenticate")]

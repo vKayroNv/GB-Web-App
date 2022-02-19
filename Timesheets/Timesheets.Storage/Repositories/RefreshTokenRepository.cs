@@ -1,8 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Timesheets.Storage.EF;
@@ -11,7 +8,7 @@ using Timesheets.Storage.Models;
 
 namespace Timesheets.Storage.Repositories
 {
-    public class RefreshTokenRepository : IRefreshTokenRepository
+    public sealed class RefreshTokenRepository : IRefreshTokenRepository
     {
         private readonly DatabaseContext _context;
 

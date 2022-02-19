@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Timesheets.Storage.EF;
@@ -9,7 +8,7 @@ using Timesheets.Storage.Models;
 
 namespace Timesheets.Storage.Repositories
 {
-    public class LoginRepository : ILoginRepository
+    public sealed class LoginRepository : ILoginRepository
     {
         private readonly DatabaseContext _context;
 
@@ -52,7 +51,9 @@ namespace Timesheets.Storage.Repositories
             var result = await _context.Logins.FirstOrDefaultAsync(s => s.Id == entity.Id, cts);
 
             if (result == null)
+            {
                 return false;
+            }
 
             result.Username = entity.Username;
             result.Password = entity.Password;

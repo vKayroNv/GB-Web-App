@@ -9,9 +9,9 @@ using Timesheets.Storage.Models;
 
 namespace Timesheets.Storage.Repositories
 {
-    public class EmployeeRepository : IEmployeeRepository
+    public sealed class EmployeeRepository : IEmployeeRepository
     {
-        private DatabaseContext _context;
+        private readonly DatabaseContext _context;
 
         public EmployeeRepository(DatabaseContext context)
         {
@@ -52,7 +52,9 @@ namespace Timesheets.Storage.Repositories
             var result = await _context.Employees.FirstOrDefaultAsync(s => s.Id == entity.Id, cts);
 
             if (result == null)
+            {
                 return false;
+            }
 
             result.UserId = entity.UserId;
             result.Comment = entity.Comment;

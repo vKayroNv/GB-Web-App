@@ -60,7 +60,7 @@ namespace Timesheets.API
                 {
                     Version = "v1",
                     Title = "Timesheets API",
-                    
+
                 });
 
                 c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme

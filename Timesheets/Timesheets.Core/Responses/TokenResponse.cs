@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Timesheets.Core.Responses
+﻿namespace Timesheets.Core.Responses
 {
     public sealed class TokenResponse
     {
