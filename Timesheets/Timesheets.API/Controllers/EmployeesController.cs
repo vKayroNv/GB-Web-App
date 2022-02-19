@@ -1,12 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
 using Timesheets.Storage.Interfaces;
 using Timesheets.Storage.Models;
-using Timesheets.Storage.Repositories;
 
 namespace Timesheets.API.Controllers
 {
@@ -15,9 +13,9 @@ namespace Timesheets.API.Controllers
     [ApiController]
     public class EmployeesController : ControllerBase
     {
-        private readonly EmployeeRepository _repository;
+        private readonly IEmployeeRepository _repository;
 
-        public EmployeesController(EmployeeRepository repository)
+        public EmployeesController(IEmployeeRepository repository)
         {
             _repository = repository;
         }

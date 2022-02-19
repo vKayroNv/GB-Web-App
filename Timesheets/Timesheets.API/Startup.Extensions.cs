@@ -12,8 +12,8 @@ namespace Timesheets.API
         {
             services.AddSingleton<DatabaseContext>();
 
-            services.AddSingleton<UserRepository>();
-            services.AddSingleton<EmployeeRepository>();
+            services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
         }
     }
 }

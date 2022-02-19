@@ -9,7 +9,7 @@ using Timesheets.Storage.Models;
 
 namespace Timesheets.Storage.Repositories
 {
-    public class UserRepository : IRepository<User>
+    public class UserRepository : IUserRepository
     {
         private DatabaseContext _context;
 
