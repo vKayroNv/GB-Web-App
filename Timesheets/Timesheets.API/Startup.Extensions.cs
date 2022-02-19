@@ -1,5 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Timesheets.Storage.EF;
+using Timesheets.Storage.Interfaces;
+using Timesheets.Storage.Models;
 using Timesheets.Storage.Repositories;
 
 namespace Timesheets.API
