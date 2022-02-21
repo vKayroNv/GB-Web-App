@@ -1,16 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Timesheets.Core.Interfaces;
 using Timesheets.Core.Models;
 
 namespace Timesheets.Core.Repositories
 {
-    public class PersonRepository
+    public class PersonRepository : IPersonRepository
     {
-        private List<Person> data = new List<Person>() 
+        private static List<Person> data = new List<Person>() 
         {
             new Person { Id = 1, FirstName = "Veda", LastName = "Richmond", Email = "ligula@necluctus.edu", Company = "Quisque Ac Libero LLP", Age = 42 },
             new Person { Id = 2, FirstName = "Demetria", LastName = "Andrews", Email = "feugiat.metus@penatibuset.org", Company = "Nulla Facilisi Foundation", Age = 31 },
@@ -66,31 +65,37 @@ namespace Timesheets.Core.Repositories
 
         public async Task<Person> GetPersonById(int id, CancellationToken cancellationToken)
         {
-            return data.FirstOrDefault(s => s.Id == id);
+            return data.SingleOrDefault(s => s.Id == id);
         }
 
-        public async Task<IEnumerable<Person>> GetPersonsByName(string name, CancellationToken cancellationToken)
+        public async Task<IReadOnlyCollection<Person>> GetPersonsByName(string name, CancellationToken cancellationToken)
         {
-            return data.Where(s => s.FirstName == name);
+            return data.Where(s => s.FirstName == name).ToArray();
         }
 
-        public async Task<IEnumerable<Person>> GetPersonsWithPagination(int skip, int take, CancellationToken cancellationToken)
+        public async Task<IReadOnlyCollection<Person>> GetPersonsWithPagination(int skip, int take, CancellationToken cancellationToken)
         {
-            return data.Skip(skip).Take(take);
+            if (skip < 0 || skip > data.Count)
+                return new List<Person>();
+			
+			data.Sort((a, b) => a.Id.CompareTo(b.Id));
+
+            return data.Skip(skip).Take(take).ToList();
         }
 
         public async Task<bool> AddPerson(Person person, CancellationToken cancellationToken)
         {
-            if (person == null)
+            if (person == null || data.Where(s => s.Id == person.Id).Count() != 0)
                 return false;
 
             data.Add(person);
+
             return true;
         }
 
         public async Task<bool> UpdatePerson(Person person, CancellationToken cancellationToken)
         {
-            var change = data.FirstOrDefault(s => s.Id == person.Id);
+            var change = data.SingleOrDefault(s => s.Id == person.Id);
 
             if (change == null)
                 return false;
@@ -106,12 +111,13 @@ namespace Timesheets.Core.Repositories
 
         public async Task<bool> DeletePerson(int id, CancellationToken cancellationToken)
         {
-            var removing = data.FirstOrDefault(s => s.Id == id);
+            var removing = data.SingleOrDefault(s => s.Id == id);
 
             if (removing == null)
                 return false;
 
             data.Remove(removing);
+
             return true;
         }
     }

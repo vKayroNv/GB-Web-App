@@ -13,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Timesheets.Core.Interfaces;
 using Timesheets.Core.Repositories;
 
 namespace Timesheets.API
@@ -28,7 +29,7 @@ namespace Timesheets.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddSingleton<PersonRepository>();
+            services.AddTransient<IPersonRepository, PersonRepository>();
 
             services.AddControllers();
 

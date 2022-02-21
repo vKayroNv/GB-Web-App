@@ -2,8 +2,8 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Threading;
 using System.Threading.Tasks;
+using Timesheets.Core.Interfaces;
 using Timesheets.Core.Models;
-using Timesheets.Core.Repositories;
 
 namespace Timesheets.API.Controllers
 {
@@ -11,9 +11,9 @@ namespace Timesheets.API.Controllers
     [ApiController]
     public class PersonsController : ControllerBase
     {
-        private PersonRepository _personRepository;
+        private IPersonRepository _personRepository;
 
-        public PersonsController(PersonRepository personRepository)
+        public PersonsController(IPersonRepository personRepository)
         {
             _personRepository = personRepository;
         }
@@ -25,7 +25,7 @@ namespace Timesheets.API.Controllers
         /// <param name="cancellationToken"></param>
         /// <response code="400">Человек по идентификатору не найден</response>
         [HttpGet("{id}")]
-        public async Task<ActionResult> GetPersonById([FromRoute] int id, CancellationToken cancellationToken)
+        public async Task<ActionResult<Person>> GetPersonById([FromRoute] int id, CancellationToken cancellationToken)
         {
             var result = await _personRepository.GetPersonById(id, cancellationToken);
 
