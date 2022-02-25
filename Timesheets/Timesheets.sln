@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32127.271
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timesheets", "Timesheets\Timesheets.csproj", "{8B1793E1-9239-437C-9106-93384CD891DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timesheets.API", "Timesheets.API\Timesheets.API.csproj", "{8B1793E1-9239-437C-9106-93384CD891DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timesheets.Core", "Timesheets.Core\Timesheets.Core.csproj", "{8DA4086D-F10D-4A27-BA0C-AF432C1BD3F8}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timesheets.Storage", "Timesheets.Storage\Timesheets.Storage.csproj", "{073BD6B4-95AA-4491-B7C6-1ABD6682B859}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{8B1793E1-9239-437C-9106-93384CD891DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8B1793E1-9239-437C-9106-93384CD891DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8B1793E1-9239-437C-9106-93384CD891DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8DA4086D-F10D-4A27-BA0C-AF432C1BD3F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8DA4086D-F10D-4A27-BA0C-AF432C1BD3F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8DA4086D-F10D-4A27-BA0C-AF432C1BD3F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8DA4086D-F10D-4A27-BA0C-AF432C1BD3F8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{073BD6B4-95AA-4491-B7C6-1ABD6682B859}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{073BD6B4-95AA-4491-B7C6-1ABD6682B859}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{073BD6B4-95AA-4491-B7C6-1ABD6682B859}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{073BD6B4-95AA-4491-B7C6-1ABD6682B859}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
