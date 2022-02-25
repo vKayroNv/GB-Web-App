@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -9,9 +10,9 @@ using Timesheets.Storage.Models;
 
 namespace Timesheets.Storage.Repositories
 {
-    public class UserRepository : IRepository<User>
+    public class UserRepository : IUserRepository
     {
-        private DatabaseContext _context;
+        private readonly DatabaseContext _context;
 
         public UserRepository(DatabaseContext context)
         {
@@ -33,7 +34,7 @@ namespace Timesheets.Storage.Repositories
             return true;
         }
 
-        public async Task<User[]> Read(CancellationToken cts)
+        public async Task<IReadOnlyCollection<User>> Read(CancellationToken cts)
         {
             var result = await _context.Users.Where(s => !s.IsDeleted).ToArrayAsync(cts);
 
@@ -49,10 +50,12 @@ namespace Timesheets.Storage.Repositories
 
         public async Task<bool> Update(User entity, CancellationToken cts)
         {
-            var result = await _context.Users.FirstOrDefaultAsync(s => s.Id == entity.Id, cts);
+            var result = await _context.Users.SingleOrDefaultAsync(s => s.Id == entity.Id, cts);
 
             if (result == null)
+            {
                 return false;
+            }
 
             result.FirstName = entity.FirstName;
             result.LastName = entity.LastName;
@@ -67,7 +70,7 @@ namespace Timesheets.Storage.Repositories
 
         public async Task<bool> Delete(Guid id, CancellationToken cts)
         {
-            var result = await _context.Users.FirstOrDefaultAsync(s => s.Id == id, cts);
+            var result = await _context.Users.SingleOrDefaultAsync(s => s.Id == id, cts);
 
             if (result != null)
             {

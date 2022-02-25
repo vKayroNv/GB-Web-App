@@ -1,11 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Reflection;
-using System.Text;
 using Timesheets.Storage.EF.Configuration;
 using Timesheets.Storage.Models;
 
@@ -19,7 +13,7 @@ namespace Timesheets.Storage.EF
         public DbSet<User> Users { get; set; }
         public DbSet<Employee> Employees { get; set; }
 
-        private IConfiguration _configuration;
+        private readonly IConfiguration _configuration;
 
 #if DEBUG || RELEASE
         public DatabaseContext(IConfiguration configuration)

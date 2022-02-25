@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
 using Timesheets.Storage.EF;
+using Timesheets.Storage.Interfaces;
 using Timesheets.Storage.Repositories;
 
 namespace Timesheets.API
@@ -8,10 +9,10 @@ namespace Timesheets.API
     {
         private void ConfigureStorageServices(IServiceCollection services)
         {
-            services.AddSingleton<DatabaseContext>();
+            services.AddScoped<DatabaseContext>();
 
-            services.AddSingleton<UserRepository>();
-            services.AddSingleton<EmployeeRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
         }
     }
 }
