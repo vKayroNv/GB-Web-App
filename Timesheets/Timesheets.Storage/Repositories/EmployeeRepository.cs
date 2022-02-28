@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -33,7 +34,7 @@ namespace Timesheets.Storage.Repositories
             return true;
         }
 
-        public async Task<Employee[]> Read(CancellationToken cts)
+        public async Task<IReadOnlyCollection<Employee>> Read(CancellationToken cts)
         {
             var result = await _context.Employees.Where(s => !s.IsDeleted).ToArrayAsync(cts);
 
@@ -49,7 +50,7 @@ namespace Timesheets.Storage.Repositories
 
         public async Task<bool> Update(Employee entity, CancellationToken cts)
         {
-            var result = await _context.Employees.FirstOrDefaultAsync(s => s.Id == entity.Id, cts);
+            var result = await _context.Employees.SingleOrDefaultAsync(s => s.Id == entity.Id, cts);
 
             if (result == null)
             {
@@ -67,7 +68,7 @@ namespace Timesheets.Storage.Repositories
 
         public async Task<bool> Delete(Guid id, CancellationToken cts)
         {
-            var result = await _context.Employees.FirstOrDefaultAsync(s => s.Id == id, cts);
+            var result = await _context.Employees.SingleOrDefaultAsync(s => s.Id == id, cts);
 
             if (result != null)
             {
