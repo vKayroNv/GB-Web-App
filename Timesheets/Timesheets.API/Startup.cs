@@ -13,8 +13,10 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
+using Timesheets.Core.Interfaces;
+using Timesheets.Core.Repositories;
 
-namespace Timesheets
+namespace Timesheets.API
 {
     public class Startup
     {
@@ -27,6 +29,8 @@ namespace Timesheets
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddTransient<IPersonRepository, PersonRepository>();
+
             services.AddControllers();
 
             services.AddSwaggerGen(c =>
@@ -35,7 +39,12 @@ namespace Timesheets
                 {
                     Version = "v1",
                     Title = "Timesheets API",
+                    
                 });
+
+                var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
+                var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+                c.IncludeXmlComments(xmlPath);
             });
         }
 
@@ -44,6 +53,14 @@ namespace Timesheets
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
+
+                app.UseSwagger();
+
+                app.UseSwaggerUI(c =>
+                {
+                    c.SwaggerEndpoint("/swagger/v1/swagger.json", "Timesheets API");
+                    c.RoutePrefix = string.Empty;
+                });
             }
 
             app.UseHttpsRedirection();
@@ -55,14 +72,6 @@ namespace Timesheets
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
-            });
-
-            app.UseSwagger();
-
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "Timesheets API");
-                c.RoutePrefix = string.Empty;
             });
         }
     }
