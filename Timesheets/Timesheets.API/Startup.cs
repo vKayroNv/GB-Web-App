@@ -26,7 +26,9 @@ namespace Timesheets.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            ConfigureStorageServices(services);
+            services.ConfigureStorageServices();
+            services.ConfigureCoreServices();
+            services.ConfigureMappers();
 
             services.AddSingleton<IUserService, UserService>();
 
