@@ -1,7 +1,9 @@
-﻿using System;
+﻿using AutoMapper;
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Timesheets.Core.DTO;
 using Timesheets.Core.Interfaces;
 using Timesheets.Storage.Interfaces;
 using Timesheets.Storage.Models;
@@ -11,30 +13,32 @@ namespace Timesheets.Core.Services.Data
     public class DataEmployeeService : IDataEmployeeService
     {
         private readonly IEmployeeRepository _repository;
+        private readonly IMapper _mapper;
 
-        public DataEmployeeService(IEmployeeRepository repository)
+        public DataEmployeeService(IEmployeeRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
-        public async Task<bool> Create(Employee entity, CancellationToken cts)
+        public async Task<bool> Create(EmployeeDTO entity, CancellationToken cts)
         {
-            return await _repository.Create(entity, cts);
+            return await _repository.Create(_mapper.Map<Employee>(entity), cts); ;
         }
 
-        public async Task<IReadOnlyCollection<Employee>> Read(CancellationToken cts)
+        public async Task<IReadOnlyCollection<EmployeeDTO>> Read(CancellationToken cts)
         {
-            return await _repository.Read(cts);
+            return _mapper.Map<IReadOnlyCollection<EmployeeDTO>>(await _repository.Read(cts));
         }
 
-        public async Task<Employee> Read(Guid id, CancellationToken cts)
+        public async Task<EmployeeDTO> Read(Guid id, CancellationToken cts)
         {
-            return await _repository.Read(id, cts); ;
+            return _mapper.Map<EmployeeDTO>(await _repository.Read(id, cts));
         }
 
-        public async Task<bool> Update(Employee entity, CancellationToken cts)
+        public async Task<bool> Update(EmployeeDTO entity, CancellationToken cts)
         {
-            return await _repository.Update(entity, cts);
+            return await _repository.Update(_mapper.Map<Employee>(entity), cts);
         }
 
         public async Task<bool> Delete(Guid id, CancellationToken cts)

@@ -1,7 +1,11 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Timesheets.API.Models;
+using Timesheets.Core.DTO;
 using Timesheets.Core.Interfaces;
 using Timesheets.Storage.Models;
 
@@ -12,10 +16,12 @@ namespace Timesheets.API.Controllers
     public class UsersController : ControllerBase
     {
         private readonly IDataUserService _dataService;
+        private readonly IMapper _mapper;
 
-        public UsersController(IDataUserService dataService)
+        public UsersController(IDataUserService dataService, IMapper mapper)
         {
             _dataService = dataService;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -25,9 +31,9 @@ namespace Timesheets.API.Controllers
         /// <param name="cts"></param>
         /// <response code="400">Введены неверные данные</response>
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] User entity, CancellationToken cts)
+        public async Task<IActionResult> Create([FromBody] UserModel entity, CancellationToken cts)
         {
-            var result = await _dataService.Create(entity, cts);
+            var result = await _dataService.Create(_mapper.Map<UserDTO>(entity), cts);
 
             if (result)
             {
@@ -47,7 +53,7 @@ namespace Timesheets.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Read(CancellationToken cts)
         {
-            var result = await _dataService.Read(cts);
+            var result = _mapper.Map<IReadOnlyCollection<UserModel>>(await _dataService.Read(cts));
 
             if (result != null)
             {
@@ -68,7 +74,7 @@ namespace Timesheets.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Read([FromRoute] Guid id, CancellationToken cts)
         {
-            var result = await _dataService.Read(id, cts);
+            var result = _mapper.Map<UserModel>(await _dataService.Read(id, cts));
 
             if (result != null)
             {
@@ -87,9 +93,9 @@ namespace Timesheets.API.Controllers
         /// <param name="cts"></param>
         /// <response code="400">Введены неверные данные</response>
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] User entity, CancellationToken cts)
+        public async Task<IActionResult> Update([FromBody] UserModel entity, CancellationToken cts)
         {
-            var result = await _dataService.Update(entity, cts);
+            var result = await _dataService.Update(_mapper.Map<UserDTO>(entity), cts);
 
             if (result)
             {

@@ -1,12 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Timesheets.Storage.Models;
+using Timesheets.Core.DTO;
 
 namespace Timesheets.Core.Interfaces
 {
-    public interface IDataUserService : IDataService<User>
+    public interface IDataUserService : IDataService<UserDTO>
     {
-        public Task<IReadOnlyCollection<User>> Read(CancellationToken cts);
+        public Task<IReadOnlyCollection<UserDTO>> Read(CancellationToken cts);
     }
 }

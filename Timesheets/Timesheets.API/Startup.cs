@@ -23,6 +23,7 @@ namespace Timesheets.API
         {
             services.ConfigureStorageServices();
             services.ConfigureCoreServices();
+            services.ConfigureMappers();
 
             services.AddControllers();
 

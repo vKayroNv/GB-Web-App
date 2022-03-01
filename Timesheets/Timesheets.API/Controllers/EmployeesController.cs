@@ -1,9 +1,12 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using Timesheets.API.Models;
+using Timesheets.Core.DTO;
 using Timesheets.Core.Interfaces;
-using Timesheets.Storage.Models;
 
 namespace Timesheets.API.Controllers
 {
@@ -12,10 +15,12 @@ namespace Timesheets.API.Controllers
     public class EmployeesController : ControllerBase
     {
         private readonly IDataEmployeeService _dataService;
+        private readonly IMapper _mapper;
 
-        public EmployeesController(IDataEmployeeService dataService)
+        public EmployeesController(IDataEmployeeService dataService, IMapper mapper)
         {
             _dataService = dataService;
+            _mapper = mapper;
         }
 
         /// <summary>
@@ -25,9 +30,9 @@ namespace Timesheets.API.Controllers
         /// <param name="cts"></param>
         /// <response code="400">Введены неверные данные</response>
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Employee entity, CancellationToken cts)
+        public async Task<IActionResult> Create([FromBody] EmployeeModel entity, CancellationToken cts)
         {
-            var result = await _dataService.Create(entity, cts);
+            var result = await _dataService.Create(_mapper.Map<EmployeeDTO>(entity), cts);
 
             if (result)
             {
@@ -47,7 +52,7 @@ namespace Timesheets.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Read(CancellationToken cts)
         {
-            var result = await _dataService.Read(cts);
+            var result = _mapper.Map<IReadOnlyCollection<EmployeeModel>>(await _dataService.Read(cts));
 
             if (result != null)
             {
@@ -68,7 +73,7 @@ namespace Timesheets.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Read([FromRoute] Guid id, CancellationToken cts)
         {
-            var result = await _dataService.Read(id, cts);
+            var result = _mapper.Map<EmployeeModel>(await _dataService.Read(id, cts));
 
             if (result != null)
             {
@@ -87,9 +92,9 @@ namespace Timesheets.API.Controllers
         /// <param name="cts"></param>
         /// <response code="400">Введены неверные данные</response>
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] Employee entity, CancellationToken cts)
+        public async Task<IActionResult> Update([FromBody] EmployeeModel entity, CancellationToken cts)
         {
-            var result = await _dataService.Update(entity, cts);
+            var result = await _dataService.Update(_mapper.Map<EmployeeDTO>(entity), cts);
 
             if (result)
             {
