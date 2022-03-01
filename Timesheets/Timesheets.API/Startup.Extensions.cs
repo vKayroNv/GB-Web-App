@@ -9,12 +9,12 @@ namespace Timesheets.API
     {
         private void ConfigureStorageServices(IServiceCollection services)
         {
-            services.AddSingleton<DatabaseContext>();
+            services.AddScoped<DatabaseContext>();
 
-            services.AddSingleton<IUserRepository, UserRepository>();
-            services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
-            services.AddSingleton<IRefreshTokenRepository, RefreshTokenRepository>();
-            services.AddSingleton<ILoginRepository, LoginRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<IEmployeeRepository, EmployeeRepository>();
+            services.AddTransient<IRefreshTokenRepository, RefreshTokenRepository>();
+            services.AddTransient<ILoginRepository, LoginRepository>();
         }
     }
 }
