@@ -1,10 +1,12 @@
-﻿using Microsoft.IdentityModel.Tokens;
+﻿using AutoMapper;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using Timesheets.Core.DTO;
 using Timesheets.Core.Interfaces;
 using Timesheets.Core.Responses;
 using Timesheets.Storage.Interfaces;
@@ -18,34 +20,36 @@ namespace Timesheets.Core.Services
 
         private readonly ILoginRepository _loginRepository;
         private readonly IRefreshTokenRepository _refreshTokenRepository;
+        private readonly IMapper _mapper;
 
-        public UserService(ILoginRepository loginRepository, IRefreshTokenRepository refreshTokenRepository)
+        public UserService(ILoginRepository loginRepository, IRefreshTokenRepository refreshTokenRepository, IMapper mapper)
         {
             _loginRepository = loginRepository;
             _refreshTokenRepository = refreshTokenRepository;
+            _mapper = mapper;
         }
 
         public async Task<bool> CreateProfile(string username, string password, CancellationToken cts)
         {
-            var profile = new Login()
+            var profile = new LoginDTO()
             {
                 Id = Guid.NewGuid(),
                 Username = username,
                 Password = password
             };
 
-            return await _loginRepository.Create(profile, cts);
+            return await _loginRepository.Create(_mapper.Map<Login>(profile), cts);
         }
 
         public async Task<bool> DeleteProfile(string username, string password, CancellationToken cts)
         {
-            var profile = await _loginRepository.Read(username, cts);
+            var profile = _mapper.Map<LoginDTO>(await _loginRepository.Read(username, cts));
             if (profile == null || profile.Password != password)
             {
                 return false;
             }
 
-            var token = await _refreshTokenRepository.Get(profile.RefreshTokenId, cts);
+            var token = _mapper.Map<RefreshTokenDTO>(await _refreshTokenRepository.Get(profile.RefreshTokenId, cts));
 
             if (token != null)
             {
@@ -57,17 +61,17 @@ namespace Timesheets.Core.Services
 
         public async Task<TokenResponse> Authenticate(string username, string password, CancellationToken cts)
         {
-            var profile = await _loginRepository.Read(username, cts);
+            var profile = _mapper.Map<LoginDTO>(await _loginRepository.Read(username, cts));
             if (profile == null || profile.Password != password)
             {
                 return null;
             }
 
-            RefreshToken refreshToken;
+            RefreshTokenDTO refreshToken;
 
             if (profile.RefreshTokenId != Guid.Empty)
             {
-                refreshToken = await _refreshTokenRepository.Get(profile.RefreshTokenId, cts);
+                refreshToken = _mapper.Map<RefreshTokenDTO>(await _refreshTokenRepository.Get(profile.RefreshTokenId, cts));
             }
             else
             {
@@ -88,8 +92,8 @@ namespace Timesheets.Core.Services
 
         public async Task<string> RefreshToken(string token, CancellationToken cts)
         {
-            var refreshToken = await _refreshTokenRepository.Get(token, cts);
-            var profile = await _loginRepository.Read(refreshToken.LoginId, cts);
+            var refreshToken = _mapper.Map<RefreshTokenDTO>(await _refreshTokenRepository.Get(token, cts));
+            var profile = _mapper.Map<LoginDTO>(await _loginRepository.Read(refreshToken.LoginId, cts));
 
             await _refreshTokenRepository.Remove(refreshToken.Id, cts);
 
@@ -116,9 +120,9 @@ namespace Timesheets.Core.Services
             return tokenHandler.WriteToken(token);
         }
 
-        private async Task<RefreshToken> GenerateRefreshToken(Login profile, CancellationToken cts)
+        private async Task<RefreshTokenDTO> GenerateRefreshToken(LoginDTO profile, CancellationToken cts)
         {
-            var refreshToken = new RefreshToken
+            var refreshToken = new RefreshTokenDTO
             {
                 Id = Guid.NewGuid(),
                 Expires = DateTime.Now.AddMinutes(360),
@@ -128,8 +132,8 @@ namespace Timesheets.Core.Services
 
             profile.RefreshTokenId = refreshToken.Id;
 
-            await _loginRepository.Update(profile, cts);
-            await _refreshTokenRepository.Add(refreshToken, cts);
+            await _loginRepository.Update(_mapper.Map<Login>(profile), cts);
+            await _refreshTokenRepository.Add(_mapper.Map<RefreshToken>(refreshToken), cts);
 
             return refreshToken;
         }

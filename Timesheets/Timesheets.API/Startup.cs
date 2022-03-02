@@ -10,7 +10,6 @@ using System;
 using System.IO;
 using System.Reflection;
 using System.Text;
-using Timesheets.Core.Interfaces;
 using Timesheets.Core.Services;
 
 namespace Timesheets.API
@@ -29,8 +28,6 @@ namespace Timesheets.API
             services.ConfigureStorageServices();
             services.ConfigureCoreServices();
             services.ConfigureMappers();
-
-            services.AddSingleton<IUserService, UserService>();
 
             services.AddCors();
 

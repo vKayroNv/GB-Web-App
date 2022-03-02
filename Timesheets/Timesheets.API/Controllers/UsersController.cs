@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using Timesheets.API.Models;
 using Timesheets.Core.DTO;
 using Timesheets.Core.Interfaces;
-using Timesheets.Storage.Models;
 
 namespace Timesheets.API.Controllers
 {
