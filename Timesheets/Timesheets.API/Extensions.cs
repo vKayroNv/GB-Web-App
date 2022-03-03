@@ -1,12 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
-using Timesheets.Core.Interfaces;
 using Timesheets.Core.Services;
 using Timesheets.Core.Services.Data;
 using Timesheets.Domain.Managers;
+using Timesheets.Interfaces.Managers;
+using Timesheets.Interfaces.Repositories;
+using Timesheets.Interfaces.Services;
 using Timesheets.Storage.EF;
-using Timesheets.Storage.Interfaces;
 using Timesheets.Storage.Repositories;
 
 namespace Timesheets.API
@@ -52,10 +53,11 @@ namespace Timesheets.API
 
         public static void ConfigureDomain(this IServiceCollection services)
         {
-            services.AddTransient<Domain.Interfaces.ISheetRepository, SheetRepository>();
-            services.AddTransient<Domain.Interfaces.IInvoiceRepository, InvoiceRepository>();
-            services.AddTransient<Domain.Interfaces.ISheetManager, SheetManager>();
-            services.AddTransient<Domain.Interfaces.IInvoiceManager, InvoiceManager>();
+            services.AddTransient<ISheetRepository, SheetRepository>();
+            services.AddTransient<IInvoiceRepository, InvoiceRepository>();
+
+            services.AddTransient<ISheetManager, SheetManager>();
+            services.AddTransient<IInvoiceManager, InvoiceManager>();
         }
     }
 }

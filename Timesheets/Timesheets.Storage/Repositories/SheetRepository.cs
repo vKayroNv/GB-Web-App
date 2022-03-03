@@ -1,11 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using Timesheets.Domain.Interfaces;
-using Timesheets.Domain.Models;
+using Timesheets.Entities.Models;
+using Timesheets.Interfaces.Repositories;
 using Timesheets.Storage.EF;
 
 namespace Timesheets.Storage.Repositories
@@ -49,7 +48,9 @@ namespace Timesheets.Storage.Repositories
             var result = await _context.Sheets.FindAsync(new object[] { entity.Id }, cts);
 
             if (result == null)
+            {
                 return false;
+            }
 
             result.ApproveDate = entity.ApproveDate;
             result.IsApproved = entity.IsApproved;
@@ -64,7 +65,9 @@ namespace Timesheets.Storage.Repositories
             var result = await _context.Sheets.FindAsync(new object[] { id }, cts);
 
             if (result == null)
+            {
                 return false;
+            }
 
             _context.Sheets.Remove(result);
 

@@ -3,10 +3,10 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Timesheets.Core.DTO;
-using Timesheets.Core.Interfaces;
-using Timesheets.Storage.Interfaces;
-using Timesheets.Storage.Models;
+using Timesheets.Entities.DTO;
+using Timesheets.Entities.Models;
+using Timesheets.Interfaces.Repositories;
+using Timesheets.Interfaces.Services;
 
 namespace Timesheets.Core.Services.Data
 {

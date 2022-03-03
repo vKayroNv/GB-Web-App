@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using Timesheets.Domain.Aggregates;
-using Timesheets.Domain.Interfaces;
-using Timesheets.Domain.Models;
+using Timesheets.Entities.Models;
+using Timesheets.Interfaces.Managers;
+using Timesheets.Interfaces.Repositories;
 
 namespace Timesheets.Domain.Managers
 {

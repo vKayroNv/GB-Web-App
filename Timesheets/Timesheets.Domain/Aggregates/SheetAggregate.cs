@@ -1,5 +1,5 @@
 ﻿using System;
-using Timesheets.Domain.Models;
+using Timesheets.Entities.Models;
 
 namespace Timesheets.Domain.Aggregates
 {

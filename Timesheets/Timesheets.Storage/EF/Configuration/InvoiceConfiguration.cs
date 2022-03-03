@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Timesheets.Domain.Models;
-using Timesheets.Storage.Models;
+using Timesheets.Entities.Models;
 
 namespace Timesheets.Storage.EF.Configuration
 {

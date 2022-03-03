@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
-using Timesheets.Domain.Models;
+using Timesheets.Entities.Models;
 
 namespace Timesheets.Domain.Aggregates
 {

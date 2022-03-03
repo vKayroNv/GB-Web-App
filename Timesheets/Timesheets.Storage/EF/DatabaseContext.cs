@@ -1,8 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Timesheets.Domain.Models;
+using Timesheets.Entities.Models;
 using Timesheets.Storage.EF.Configuration;
-using Timesheets.Storage.Models;
 
 namespace Timesheets.Storage.EF
 {

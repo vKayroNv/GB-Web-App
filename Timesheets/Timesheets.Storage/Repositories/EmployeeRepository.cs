@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
+using Timesheets.Entities.Models;
+using Timesheets.Interfaces.Repositories;
 using Timesheets.Storage.EF;
-using Timesheets.Storage.Interfaces;
-using Timesheets.Storage.Models;
 
 namespace Timesheets.Storage.Repositories
 {

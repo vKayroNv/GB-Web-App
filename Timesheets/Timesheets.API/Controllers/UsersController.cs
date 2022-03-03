@@ -5,9 +5,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Timesheets.API.Models;
-using Timesheets.Core.DTO;
-using Timesheets.Core.Interfaces;
+using Timesheets.Entities.DTO;
+using Timesheets.Entities.VievModels;
+using Timesheets.Interfaces.Services;
 
 namespace Timesheets.API.Controllers
 {

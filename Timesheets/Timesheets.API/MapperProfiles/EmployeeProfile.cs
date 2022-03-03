@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Timesheets.API.Models;
-using Timesheets.Core.DTO;
+using Timesheets.Entities.DTO;
+using Timesheets.Entities.VievModels;
 
 namespace Timesheets.API.MapperProfiles
 {

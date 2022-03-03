@@ -21,7 +21,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Timesheets.Domain\Timesheets.Domain.csproj" />
+    <ProjectReference Include="..\Timesheers.Models\Timesheers.Entites.csproj" />
+    <ProjectReference Include="..\Timesheets.Interfaces\Timesheets.Interfaces.csproj" />
   </ItemGroup>
 
 </Project>

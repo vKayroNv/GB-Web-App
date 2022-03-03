@@ -16,7 +16,7 @@ namespace Timesheets.Storage.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.14");
 
-            modelBuilder.Entity("Timesheets.Storage.Models.Employee", b =>
+            modelBuilder.Entity("Timesheets.Entities.Models.Employee", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -36,7 +36,24 @@ namespace Timesheets.Storage.Migrations
                     b.ToTable("employees");
                 });
 
-            modelBuilder.Entity("Timesheets.Storage.Models.Login", b =>
+            modelBuilder.Entity("Timesheets.Entities.Models.Invoice", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DateEnd")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("DateStart")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("invoices");
+                });
+
+            modelBuilder.Entity("Timesheets.Entities.Models.Login", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -49,12 +66,14 @@ namespace Timesheets.Storage.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<Guid>("RefreshTokenId")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Username")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -65,7 +84,7 @@ namespace Timesheets.Storage.Migrations
                     b.ToTable("logins");
                 });
 
-            modelBuilder.Entity("Timesheets.Storage.Models.RefreshToken", b =>
+            modelBuilder.Entity("Timesheets.Entities.Models.RefreshToken", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -85,7 +104,29 @@ namespace Timesheets.Storage.Migrations
                     b.ToTable("tokens");
                 });
 
-            modelBuilder.Entity("Timesheets.Storage.Models.User", b =>
+            modelBuilder.Entity("Timesheets.Entities.Models.Sheet", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("ApproveDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<Guid?>("InvoiceId")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsApproved")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.ToTable("sheets");
+                });
+
+            modelBuilder.Entity("Timesheets.Entities.Models.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -98,17 +139,33 @@ namespace Timesheets.Storage.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.Property<bool>("IsDeleted")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("LastName")
+                        .IsRequired()
+                        .HasMaxLength(50)
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.ToTable("users");
+                });
+
+            modelBuilder.Entity("Timesheets.Entities.Models.Sheet", b =>
+                {
+                    b.HasOne("Timesheets.Entities.Models.Invoice", null)
+                        .WithMany("Sheets")
+                        .HasForeignKey("InvoiceId");
+                });
+
+            modelBuilder.Entity("Timesheets.Entities.Models.Invoice", b =>
+                {
+                    b.Navigation("Sheets");
                 });
 #pragma warning restore 612, 618
         }

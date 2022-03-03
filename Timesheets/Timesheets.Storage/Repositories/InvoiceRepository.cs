@@ -3,11 +3,9 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Timesheets.Domain.Interfaces;
-using Timesheets.Domain.Models;
+using Timesheets.Entities.Models;
+using Timesheets.Interfaces.Repositories;
 using Timesheets.Storage.EF;
-using Timesheets.Storage.Interfaces;
-using Timesheets.Storage.Models;
 
 namespace Timesheets.Storage.Repositories
 {
@@ -50,7 +48,9 @@ namespace Timesheets.Storage.Repositories
             var result = await _context.Invoices.FindAsync(new object[] { entity.Id }, cts);
 
             if (result == null)
+            {
                 return false;
+            }
 
             result.DateStart = entity.DateStart;
             result.DateEnd = entity.DateEnd;
@@ -66,7 +66,9 @@ namespace Timesheets.Storage.Repositories
             var result = await _context.Invoices.FindAsync(new object[] { id }, cts);
 
             if (result == null)
+            {
                 return false;
+            }
 
             _context.Invoices.Remove(result);
 
