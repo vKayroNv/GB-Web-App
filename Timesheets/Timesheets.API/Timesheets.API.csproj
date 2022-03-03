@@ -14,7 +14,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Timesheets.Core\Timesheets.Core.csproj" />
-    <ProjectReference Include="..\Timesheets.Storage\Timesheets.Storage.csproj" />
+    <ProjectReference Include="..\Timesheets.Domain\Timesheets.Domain.csproj" />
   </ItemGroup>
 
   <ProjectExtensions><VisualStudio><UserProperties appsettings_1json__JsonSchema="" properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>

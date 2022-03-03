@@ -25,6 +25,7 @@ namespace Timesheets.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.ConfigureDomain();
             services.ConfigureStorageServices();
             services.ConfigureCoreServices();
             services.ConfigureMappers();

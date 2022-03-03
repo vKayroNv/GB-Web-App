@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Timesheets.Core.Interfaces;
 using Timesheets.Core.Services;
 using Timesheets.Core.Services.Data;
+using Timesheets.Domain.Managers;
 using Timesheets.Storage.EF;
 using Timesheets.Storage.Interfaces;
 using Timesheets.Storage.Repositories;
@@ -47,6 +48,14 @@ namespace Timesheets.API
                    }));
 
             services.AddSingleton(cfg.CreateMapper());
+        }
+
+        public static void ConfigureDomain(this IServiceCollection services)
+        {
+            services.AddTransient<Domain.Interfaces.ISheetRepository, SheetRepository>();
+            services.AddTransient<Domain.Interfaces.IInvoiceRepository, InvoiceRepository>();
+            services.AddTransient<Domain.Interfaces.ISheetManager, SheetManager>();
+            services.AddTransient<Domain.Interfaces.IInvoiceManager, InvoiceManager>();
         }
     }
 }
