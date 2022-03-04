@@ -8,8 +8,6 @@ namespace Timesheets.Entities.Models
         [Required]
         public Guid Id { get; set; }
 
-        public bool IsDeleted { get; set; }
-
         public string Comment { get; set; }
     }
 

@@ -11,7 +11,6 @@ namespace Timesheets.Storage.EF.Configuration
             builder.ToTable("tokens");
             builder.HasKey(t => t.Id);
             builder.Ignore(t => t.Comment);
-            builder.Ignore(t => t.IsDeleted);
             builder.Ignore(t => t.IsExpired);
         }
     }

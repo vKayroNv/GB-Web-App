@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Timesheers.Models\Timesheers.Entites.csproj" />
+    <ProjectReference Include="..\Timesheers.Entities\Timesheers.Entities.csproj" />
   </ItemGroup>
 
 </Project>

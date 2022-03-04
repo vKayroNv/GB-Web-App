@@ -6,8 +6,14 @@ using Timesheets.Entities.Models;
 
 namespace Timesheets.Interfaces.Managers
 {
-    public interface ISheetManager : IManagerBase<Sheet>
+    public interface ISheetManager
     {
+        public Task<bool> Create(DateTime dateTime, CancellationToken cts);
+
+        public Task<Sheet> Read(Guid id, CancellationToken cts);
+
+        public Task<IReadOnlyCollection<Sheet>> Read(CancellationToken cts);
+
         public Task<bool> Approve(Guid sheetId, CancellationToken cts);
     }
 }
