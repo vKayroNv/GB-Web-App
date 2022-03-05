@@ -41,11 +41,7 @@ namespace Timesheets.API
                     new Core.MapperProfiles.UserProfile(),
                     new Core.MapperProfiles.EntityProfile(),
                     new Core.MapperProfiles.LoginProfile(),
-                    new Core.MapperProfiles.RefreshTokenProfile(),
-
-                    new MapperProfiles.EmployeeProfile(),
-                    new MapperProfiles.UserProfile(),
-                    new MapperProfiles.EntityProfile()
+                    new Core.MapperProfiles.RefreshTokenProfile()
                    }));
 
             services.AddSingleton(cfg.CreateMapper());

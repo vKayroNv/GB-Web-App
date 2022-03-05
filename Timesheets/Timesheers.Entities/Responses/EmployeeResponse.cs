@@ -1,14 +1,13 @@
 ﻿using System;
 
-namespace Timesheets.Entities.VievModels
+namespace Timesheers.Entities.Responses
 {
-    public class EntityModel
+    public class EmployeeResponse
     {
         public Guid Id { get; set; }
 
-        public bool IsDeleted { get; set; }
+        public Guid UserId { get; set; }
 
         public string Comment { get; set; }
     }
-
 }

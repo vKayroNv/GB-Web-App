@@ -59,7 +59,6 @@ namespace Timesheets.Storage.Repositories
             result.Password = entity.Password;
             result.RefreshTokenId = entity.RefreshTokenId;
             result.Comment = entity.Comment;
-            result.IsDeleted = entity.IsDeleted;
 
             await _context.SaveChangesAsync(cts);
 

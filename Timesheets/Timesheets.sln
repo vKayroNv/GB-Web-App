@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timesheets.Domain", "Timesh
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timesheets.Interfaces", "Timesheets.Interfaces\Timesheets.Interfaces.csproj", "{6CEF2627-D458-4511-8F39-C85094E21D65}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timesheers.Entites", "Timesheers.Models\Timesheers.Entites.csproj", "{E5166977-3C59-4CFD-B2F2-B1305A4E29AE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Timesheers.Entities", "Timesheers.Entities\Timesheers.Entities.csproj", "{E5166977-3C59-4CFD-B2F2-B1305A4E29AE}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Timesheets.Tests", "Timesheets.Tests\Timesheets.Tests.csproj", "{5836E5B7-DDAE-42C7-BEE9-1CF68365BA39}"
 EndProject

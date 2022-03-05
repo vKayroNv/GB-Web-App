@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Timesheets.Entities.Models;
@@ -36,7 +35,7 @@ namespace Timesheets.Storage.Repositories
 
         public async Task<IReadOnlyCollection<User>> Read(CancellationToken cts)
         {
-            var result = await _context.Users.Where(s => !s.IsDeleted).ToArrayAsync(cts);
+            var result = await _context.Users.ToArrayAsync(cts);
 
             return result;
         }
@@ -61,7 +60,6 @@ namespace Timesheets.Storage.Repositories
             result.LastName = entity.LastName;
             result.Age = entity.Age;
             result.Comment = entity.Comment;
-            result.IsDeleted = entity.IsDeleted;
 
             await _context.SaveChangesAsync(cts);
 
@@ -74,7 +72,7 @@ namespace Timesheets.Storage.Repositories
 
             if (result != null)
             {
-                result.IsDeleted = true;
+                _context.Users.Remove(result);
 
                 await _context.SaveChangesAsync();
 
