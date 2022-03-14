@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using Timesheets.Core.Interfaces;
 namespace Timesheets.API.Controllers
 {
     [Route("[controller]")]
+    [Authorize]
     [ApiController]
     public class EmployeesController : ControllerBase
     {
@@ -29,6 +31,7 @@ namespace Timesheets.API.Controllers
         /// <param name="entity">Новый сотрудник</param>
         /// <param name="cts"></param>
         /// <response code="400">Введены неверные данные</response>
+        /// <response code="401">Недостаточно прав</response>
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] EmployeeModel entity, CancellationToken cts)
         {
@@ -49,6 +52,7 @@ namespace Timesheets.API.Controllers
         /// </summary>
         /// <param name="cts"></param>
         /// <response code="400">Введен неверный идентификатор</response>
+        /// <response code="401">Недостаточно прав</response>
         [HttpGet]
         public async Task<IActionResult> Read(CancellationToken cts)
         {
@@ -70,6 +74,7 @@ namespace Timesheets.API.Controllers
         /// <param name="id">Идентификатор сотрудника</param>
         /// <param name="cts"></param>
         /// <response code="400">Введен неверный идентификатор</response>
+        /// <response code="401">Недостаточно прав</response>
         [HttpGet("{id}")]
         public async Task<IActionResult> Read([FromRoute] Guid id, CancellationToken cts)
         {
@@ -91,6 +96,7 @@ namespace Timesheets.API.Controllers
         /// <param name="entity">Обновленные данные сотрудника, где id в новых данных совпадает с id в базе</param>
         /// <param name="cts"></param>
         /// <response code="400">Введены неверные данные</response>
+        /// <response code="401">Недостаточно прав</response>
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] EmployeeModel entity, CancellationToken cts)
         {
@@ -112,6 +118,7 @@ namespace Timesheets.API.Controllers
         /// <param name="id">Идентификатор сотрудника</param>
         /// <param name="cts"></param>
         /// <response code="400">Введен неверный идентификатор</response>
+        /// <response code="401">Недостаточно прав</response>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken cts)
         {

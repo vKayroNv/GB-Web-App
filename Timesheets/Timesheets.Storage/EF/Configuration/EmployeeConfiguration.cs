@@ -4,7 +4,7 @@ using Timesheets.Storage.Models;
 
 namespace Timesheets.Storage.EF.Configuration
 {
-    public class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
+    public sealed class EmployeeConfiguration : IEntityTypeConfiguration<Employee>
     {
         public void Configure(EntityTypeBuilder<Employee> builder)
         {
