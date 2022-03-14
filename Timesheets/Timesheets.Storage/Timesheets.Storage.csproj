@@ -20,4 +20,9 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="6.0.0" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Timesheers.Entities\Timesheers.Entities.csproj" />
+    <ProjectReference Include="..\Timesheets.Interfaces\Timesheets.Interfaces.csproj" />
+  </ItemGroup>
+
 </Project>

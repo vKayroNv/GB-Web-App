@@ -1,11 +1,13 @@
 ﻿using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 using System.Collections.Generic;
-using Timesheets.Core.Interfaces;
 using Timesheets.Core.Services;
 using Timesheets.Core.Services.Data;
+using Timesheets.Domain.Managers;
+using Timesheets.Interfaces.Managers;
+using Timesheets.Interfaces.Repositories;
+using Timesheets.Interfaces.Services;
 using Timesheets.Storage.EF;
-using Timesheets.Storage.Interfaces;
 using Timesheets.Storage.Repositories;
 
 namespace Timesheets.API
@@ -39,14 +41,19 @@ namespace Timesheets.API
                     new Core.MapperProfiles.UserProfile(),
                     new Core.MapperProfiles.EntityProfile(),
                     new Core.MapperProfiles.LoginProfile(),
-                    new Core.MapperProfiles.RefreshTokenProfile(),
-
-                    new MapperProfiles.EmployeeProfile(),
-                    new MapperProfiles.UserProfile(),
-                    new MapperProfiles.EntityProfile()
+                    new Core.MapperProfiles.RefreshTokenProfile()
                    }));
 
             services.AddSingleton(cfg.CreateMapper());
+        }
+
+        public static void ConfigureDomain(this IServiceCollection services)
+        {
+            services.AddTransient<ISheetRepository, SheetRepository>();
+            services.AddTransient<IInvoiceRepository, InvoiceRepository>();
+
+            services.AddTransient<ISheetManager, SheetManager>();
+            services.AddTransient<IInvoiceManager, InvoiceManager>();
         }
     }
 }

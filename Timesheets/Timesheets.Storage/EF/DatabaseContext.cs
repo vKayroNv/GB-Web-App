@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Timesheets.Entities.Models;
 using Timesheets.Storage.EF.Configuration;
-using Timesheets.Storage.Models;
 
 namespace Timesheets.Storage.EF
 {
@@ -14,6 +14,8 @@ namespace Timesheets.Storage.EF
         public DbSet<Employee> Employees { get; set; }
         public DbSet<Login> Logins { get; set; }
         public DbSet<RefreshToken> Tokens { get; set; }
+        public DbSet<Sheet> Sheets { get; set; }
+        public DbSet<Invoice> Invoices { get; set; }
 
         private readonly IConfiguration _configuration;
 
@@ -34,7 +36,8 @@ namespace Timesheets.Storage.EF
             }
 
             var configurationBuilder = new ConfigurationBuilder()
-                .SetBasePath(@"D:\randomthings\C#\GB-Web-App\Timesheets\Timesheets.API")
+                //.SetBasePath(@"D:\randomthings\C#\GB-Web-App\Timesheets\Timesheets.API")
+                .SetBasePath(@"E:\Programs\GB-Web-App\Timesheets\Timesheets.API")
                 .AddJsonFile("appsettings.json");
 
             _configuration = configurationBuilder.Build();
@@ -50,6 +53,8 @@ namespace Timesheets.Storage.EF
             modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
             modelBuilder.ApplyConfiguration(new RefreshTokenConfiguration());
             modelBuilder.ApplyConfiguration(new LoginConfiguration());
+            modelBuilder.ApplyConfiguration(new SheetConfiguration());
+            modelBuilder.ApplyConfiguration(new InvoiceConfiguration());
         }
     }
 }

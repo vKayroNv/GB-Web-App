@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
-using Timesheets.Core.DTO;
-using Timesheets.Storage.Models;
+using Timesheets.Entities.DTO;
+using Timesheets.Entities.Models;
 
 namespace Timesheets.Core.MapperProfiles
 {

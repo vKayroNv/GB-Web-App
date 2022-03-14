@@ -2,12 +2,10 @@ using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Timesheets.API.Models;
-using Timesheets.Core.DTO;
-using Timesheets.Core.Interfaces;
+using Timesheers.Entities.Requests;
+using Timesheets.Interfaces.Services;
 
 namespace Timesheets.API.Controllers
 {
@@ -33,9 +31,9 @@ namespace Timesheets.API.Controllers
         /// <response code="400">Введены неверные данные</response>
         /// <response code="401">Недостаточно прав</response>
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] EmployeeModel entity, CancellationToken cts)
+        public async Task<IActionResult> Create([FromBody] EmployeeRequest entity, CancellationToken cts)
         {
-            var result = await _dataService.Create(_mapper.Map<EmployeeDTO>(entity), cts);
+            var result = await _dataService.Create(entity, cts);
 
             if (result)
             {
@@ -56,7 +54,7 @@ namespace Timesheets.API.Controllers
         [HttpGet]
         public async Task<IActionResult> Read(CancellationToken cts)
         {
-            var result = _mapper.Map<IReadOnlyCollection<EmployeeModel>>(await _dataService.Read(cts));
+            var result = await _dataService.Read(cts);
 
             if (result != null)
             {
@@ -78,7 +76,7 @@ namespace Timesheets.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> Read([FromRoute] Guid id, CancellationToken cts)
         {
-            var result = _mapper.Map<EmployeeModel>(await _dataService.Read(id, cts));
+            var result = await _dataService.Read(id, cts);
 
             if (result != null)
             {
@@ -93,14 +91,15 @@ namespace Timesheets.API.Controllers
         /// <summary>
         /// Обновление информации о сотруднике в базе данных
         /// </summary>
+        /// <param name="id">Идентификатор пользователя</param>
         /// <param name="entity">Обновленные данные сотрудника, где id в новых данных совпадает с id в базе</param>
         /// <param name="cts"></param>
         /// <response code="400">Введены неверные данные</response>
         /// <response code="401">Недостаточно прав</response>
         [HttpPut]
-        public async Task<IActionResult> Update([FromBody] EmployeeModel entity, CancellationToken cts)
+        public async Task<IActionResult> Update([FromRoute] Guid id, [FromBody] EmployeeRequest entity, CancellationToken cts)
         {
-            var result = await _dataService.Update(_mapper.Map<EmployeeDTO>(entity), cts);
+            var result = await _dataService.Update(id, entity, cts);
 
             if (result)
             {
@@ -108,7 +107,7 @@ namespace Timesheets.API.Controllers
             }
             else
             {
-                return BadRequest(entity.Id);
+                return BadRequest(id);
             }
         }
 
