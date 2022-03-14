@@ -25,11 +25,11 @@ namespace Timesheets.API.Controllers
 
             if (result)
             {
-                return Ok(new { message = $"Profile \"{username}\" has been created" });
+                return Ok(new { message = $"Profile '{username}' has been created" });
             }
             else
             {
-                return BadRequest(new { message = $"Profile \"{username}\" already exists" });
+                return BadRequest(new { message = $"Profile '{username}' already exists" });
             }
         }
 
@@ -40,7 +40,7 @@ namespace Timesheets.API.Controllers
 
             if (result)
             {
-                return Ok(new { message = $"Profile \"{username}\" has been deleted" });
+                return Ok(new { message = $"Profile '{username}' has been deleted" });
             }
             else
             {
