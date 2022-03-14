@@ -5,13 +5,15 @@ using Timesheets.Storage.Models;
 
 namespace Timesheets.Storage.EF
 {
-    public class DatabaseContext : DbContext
+    public sealed class DatabaseContext : DbContext
     {
         //dotnet ef migrations add InitialCreate --configuration MIGRATE
-        //dotnet ef database update
+        //dotnet ef database update --configuration MIGRATE
 
         public DbSet<User> Users { get; set; }
         public DbSet<Employee> Employees { get; set; }
+        public DbSet<Login> Logins { get; set; }
+        public DbSet<RefreshToken> Tokens { get; set; }
 
         private readonly IConfiguration _configuration;
 
@@ -37,6 +39,7 @@ namespace Timesheets.Storage.EF
 
             _configuration = configurationBuilder.Build();
 #endif
+
             optionsBuilder.UseSqlite(_configuration.GetConnectionString("database"));
             base.OnConfiguring(optionsBuilder);
         }
@@ -45,6 +48,8 @@ namespace Timesheets.Storage.EF
         {
             modelBuilder.ApplyConfiguration(new UserConfiguration());
             modelBuilder.ApplyConfiguration(new EmployeeConfiguration());
+            modelBuilder.ApplyConfiguration(new RefreshTokenConfiguration());
+            modelBuilder.ApplyConfiguration(new LoginConfiguration());
         }
     }
 }

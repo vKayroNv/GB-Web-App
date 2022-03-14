@@ -1,4 +1,5 @@
 using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
@@ -7,11 +8,11 @@ using System.Threading.Tasks;
 using Timesheets.API.Models;
 using Timesheets.Core.DTO;
 using Timesheets.Core.Interfaces;
-using Timesheets.Storage.Models;
 
 namespace Timesheets.API.Controllers
 {
     [Route("[controller]")]
+    [Authorize]
     [ApiController]
     public class UsersController : ControllerBase
     {
@@ -30,6 +31,7 @@ namespace Timesheets.API.Controllers
         /// <param name="entity">Новый пользователь</param>
         /// <param name="cts"></param>
         /// <response code="400">Введены неверные данные</response>
+        /// <response code="401">Недостаточно прав</response>
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] UserModel entity, CancellationToken cts)
         {
@@ -50,6 +52,7 @@ namespace Timesheets.API.Controllers
         /// </summary>
         /// <param name="cts"></param>
         /// <response code="400">Введен неверный идентификатор</response>
+        /// <response code="401">Недостаточно прав</response>
         [HttpGet]
         public async Task<IActionResult> Read(CancellationToken cts)
         {
@@ -71,6 +74,7 @@ namespace Timesheets.API.Controllers
         /// <param name="id">Идентификатор пользователя</param>
         /// <param name="cts"></param>
         /// <response code="400">Введен неверный идентификатор</response>
+        /// <response code="401">Недостаточно прав</response>
         [HttpGet("{id}")]
         public async Task<IActionResult> Read([FromRoute] Guid id, CancellationToken cts)
         {
@@ -92,6 +96,7 @@ namespace Timesheets.API.Controllers
         /// <param name="entity">Обновленные данные пользователя, где id в новых данных совпадает с id в базе</param>
         /// <param name="cts"></param>
         /// <response code="400">Введены неверные данные</response>
+        /// <response code="401">Недостаточно прав</response>
         [HttpPut]
         public async Task<IActionResult> Update([FromBody] UserModel entity, CancellationToken cts)
         {
@@ -113,6 +118,7 @@ namespace Timesheets.API.Controllers
         /// <param name="id">Идентификатор пользователя</param>
         /// <param name="cts"></param>
         /// <response code="400">Введен неверный идентификатор</response>
+        /// <response code="401">Недостаточно прав</response>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete([FromRoute] Guid id, CancellationToken cts)
         {

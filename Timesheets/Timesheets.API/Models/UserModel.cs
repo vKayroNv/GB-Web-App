@@ -1,5 +1,3 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-
 namespace Timesheets.API.Models
 {
     public class UserModel : EntityModel
