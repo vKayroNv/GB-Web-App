@@ -1,24 +1,16 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Threading.Tasks;
-using Timesheets.Core.Interfaces;
-using Timesheets.Core.Repositories;
 
 namespace Timesheets.API
 {
-    public class Startup
+    public partial class Startup
     {
         public Startup(IConfiguration configuration)
         {
@@ -29,7 +21,9 @@ namespace Timesheets.API
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IPersonRepository, PersonRepository>();
+            services.ConfigureStorageServices();
+            services.ConfigureCoreServices();
+            services.ConfigureMappers();
 
             services.AddControllers();
 
@@ -39,7 +33,7 @@ namespace Timesheets.API
                 {
                     Version = "v1",
                     Title = "Timesheets API",
-                    
+
                 });
 
                 var xmlFile = $"{Assembly.GetExecutingAssembly().GetName().Name}.xml";
