@@ -36,14 +36,14 @@ namespace Timesheets.Storage.EF
             }
 
             var configurationBuilder = new ConfigurationBuilder()
-                //.SetBasePath(@"D:\randomthings\C#\GB-Web-App\Timesheets\Timesheets.API")
-                .SetBasePath(@"E:\Programs\GB-Web-App\Timesheets\Timesheets.API")
+                .SetBasePath(@"D:\randomthings\C#\GB-Web-App\Timesheets\Timesheets.API")
+                //.SetBasePath(@"E:\Programs\GB-Web-App\Timesheets\Timesheets.API")
                 .AddJsonFile("appsettings.json");
 
             _configuration = configurationBuilder.Build();
 #endif
 
-            optionsBuilder.UseSqlite(_configuration.GetConnectionString("database"));
+            optionsBuilder.UseSqlite(_configuration.GetConnectionString("database_pc"));
             base.OnConfiguring(optionsBuilder);
         }
 
