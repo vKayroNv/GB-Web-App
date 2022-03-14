@@ -2,9 +2,9 @@
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Timesheets.Entities.Models;
+using Timesheets.Interfaces.Repositories;
 using Timesheets.Storage.EF;
-using Timesheets.Storage.Interfaces;
-using Timesheets.Storage.Models;
 
 namespace Timesheets.Storage.Repositories
 {
@@ -59,7 +59,6 @@ namespace Timesheets.Storage.Repositories
             result.Password = entity.Password;
             result.RefreshTokenId = entity.RefreshTokenId;
             result.Comment = entity.Comment;
-            result.IsDeleted = entity.IsDeleted;
 
             await _context.SaveChangesAsync(cts);
 

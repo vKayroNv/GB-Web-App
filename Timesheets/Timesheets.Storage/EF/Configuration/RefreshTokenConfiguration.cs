@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using Timesheets.Storage.Models;
+using Timesheets.Entities.Models;
 
 namespace Timesheets.Storage.EF.Configuration
 {
@@ -11,7 +11,6 @@ namespace Timesheets.Storage.EF.Configuration
             builder.ToTable("tokens");
             builder.HasKey(t => t.Id);
             builder.Ignore(t => t.Comment);
-            builder.Ignore(t => t.IsDeleted);
             builder.Ignore(t => t.IsExpired);
         }
     }

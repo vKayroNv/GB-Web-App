@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Timesheets.Core.Interfaces;
+using Timesheets.Interfaces.Services;
 
 namespace Timesheets.API.Controllers
 {
@@ -56,7 +56,7 @@ namespace Timesheets.API.Controllers
             {
                 return BadRequest(new { message = "Username or password is incorrect" });
             }
-            SetTokenCookie(token.RefreshToken);
+            SetTokenCookie(token);
             return Ok(token);
         }
 

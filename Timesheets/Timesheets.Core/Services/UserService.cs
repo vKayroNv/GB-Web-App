@@ -6,11 +6,10 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using Timesheets.Core.DTO;
-using Timesheets.Core.Interfaces;
-using Timesheets.Core.Responses;
-using Timesheets.Storage.Interfaces;
-using Timesheets.Storage.Models;
+using Timesheets.Entities.DTO;
+using Timesheets.Entities.Models;
+using Timesheets.Interfaces.Repositories;
+using Timesheets.Interfaces.Services;
 
 namespace Timesheets.Core.Services
 {
@@ -59,7 +58,7 @@ namespace Timesheets.Core.Services
             return await _loginRepository.Delete(profile.Id, cts);
         }
 
-        public async Task<TokenResponse> Authenticate(string username, string password, CancellationToken cts)
+        public async Task<string> Authenticate(string username, string password, CancellationToken cts)
         {
             var profile = _mapper.Map<LoginDTO>(await _loginRepository.Read(username, cts));
             if (profile == null || profile.Password != password)
@@ -83,11 +82,7 @@ namespace Timesheets.Core.Services
                 refreshToken = await GenerateRefreshToken(profile, cts);
             }
 
-            return new TokenResponse()
-            {
-                Token = GenerateJwtToken(profile.Id.ToString(), 15),
-                RefreshToken = refreshToken.Token
-            };
+            return refreshToken.Token;
         }
 
         public async Task<string> RefreshToken(string token, CancellationToken cts)
